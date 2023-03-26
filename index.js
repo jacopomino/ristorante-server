@@ -67,7 +67,7 @@ app.put("/delate-cart", async (req,res)=>{
 app.put("/add-consegna", async (req,res)=>{
     let info=JSON.parse(Object.keys(req.body)[0]);
     let client=new MongoClient("mongodb+srv://apo:jac2001min@cluster0.pdunp.mongodb.net/?retryWrites=true&w=majority")
-    client.db("ristoro").collection("ristoranti").updateOne({_id:new ObjectId(info.id)},{$push:{consegna:{id:new ObjectId(),ora:info.ora,via:info.via,citta:info.citta,prezzo:info.prezzo,stato:0}}},(err,result)=>{
+    client.db("ristoro").collection("ristoranti").updateOne({_id:new ObjectId(info.id)},{$push:{consegna:{id:new ObjectId(),ora:info.ora,via:info.via,citta:info.citta,prezzo:info.prezzo,stato:0,cliente:info.cliente}}},(err,result)=>{
         if (err) throw err;
     })
 })
