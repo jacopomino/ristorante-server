@@ -27,7 +27,7 @@ app.put("/signup", async (req,res)=>{
 app.put("/add-dispensa", async (req,res)=>{
     let info=JSON.parse(Object.keys(req.body)[0]);
     let client=new MongoClient("mongodb+srv://apo:jac2001min@cluster0.pdunp.mongodb.net/?retryWrites=true&w=majority")
-    client.db("ristoro").collection("ristoranti").updateOne({_id:new ObjectId(info.id)},{$push:{dispensa:{id:new ObjectId(),elemento:info.elemento}}},(err,result)=>{
+    client.db("ristoro").collection("ristoranti").updateOne({_id:new ObjectId(info.id)},{$push:{"dispensa":{id:new ObjectId(),elemento:info.elemento,categoria:info.categoria}}},(err,result)=>{
         if (err) throw err;
     })
 })
@@ -43,7 +43,7 @@ app.put("/modify-dispensa", async (req,res)=>{
 app.put("/add-cart", async (req,res)=>{
     let info=JSON.parse(Object.keys(req.body)[0]);
     let client=new MongoClient("mongodb+srv://apo:jac2001min@cluster0.pdunp.mongodb.net/?retryWrites=true&w=majority")
-    client.db("ristoro").collection("ristoranti").updateOne({_id:new ObjectId(info.id)},{$push:{carrello:{id:new ObjectId(),elemento:info.elemento}}},(err,result)=>{
+    client.db("ristoro").collection("ristoranti").updateOne({_id:new ObjectId(info.id)},{$push:{carrello:{id:info.idCarrello,elemento:info.elemento}}},(err,result)=>{
         if (err) throw err;
     })
 })
