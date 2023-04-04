@@ -58,7 +58,6 @@ app.put("/modify-carrello", async (req,res)=>{
 //cancella elemento dal carrello
 app.put("/delate-cart", async (req,res)=>{
     let info=JSON.parse(Object.keys(req.body)[0]);
-    console.log(info);
     let client=new MongoClient("mongodb://apo:jac2001min@cluster0-shard-00-00.pdunp.mongodb.net:27017,cluster0-shard-00-01.pdunp.mongodb.net:27017,cluster0-shard-00-02.pdunp.mongodb.net:27017/?ssl=true&replicaSet=atlas-me2tz8-shard-0&authSource=admin&retryWrites=true&w=majority")
     client.db("ristoro").collection("ristoranti").updateOne({_id:new ObjectId(info.id)},{$pull:{carrello:{id:new ObjectId(info.idCarrello)}}},(err,result)=>{
         if (err) throw err;
@@ -85,6 +84,22 @@ app.put("/delate-consegna", async (req,res)=>{
     let info=JSON.parse(Object.keys(req.body)[0]);
     let client=new MongoClient("mongodb://apo:jac2001min@cluster0-shard-00-00.pdunp.mongodb.net:27017,cluster0-shard-00-01.pdunp.mongodb.net:27017,cluster0-shard-00-02.pdunp.mongodb.net:27017/?ssl=true&replicaSet=atlas-me2tz8-shard-0&authSource=admin&retryWrites=true&w=majority")
     client.db("ristoro").collection("ristoranti").updateOne({_id:new ObjectId(info.id)},{$pull:{consegna:{id:new ObjectId(info.idConsegna)}}},(err,result)=>{
+        if (err) throw err;
+    })
+})
+//add prenotazione
+app.put("/add-prenotazione", async (req,res)=>{
+    let info=JSON.parse(Object.keys(req.body)[0]);
+    let client=new MongoClient("mongodb://apo:jac2001min@cluster0-shard-00-00.pdunp.mongodb.net:27017,cluster0-shard-00-01.pdunp.mongodb.net:27017,cluster0-shard-00-02.pdunp.mongodb.net:27017/?ssl=true&replicaSet=atlas-me2tz8-shard-0&authSource=admin&retryWrites=true&w=majority")
+    client.db("ristoro").collection("ristoranti").updateOne({_id:new ObjectId(info.id)},{$push:{prenotazione:{id:new ObjectId(),title:info.text,date:info.dataOra}}},(err,result)=>{
+        if (err) throw err;
+    })
+})
+//cancella prenotazione
+app.put("/delate-prenotazione", async (req,res)=>{
+    let info=JSON.parse(Object.keys(req.body)[0]);
+    let client=new MongoClient("mongodb://apo:jac2001min@cluster0-shard-00-00.pdunp.mongodb.net:27017,cluster0-shard-00-01.pdunp.mongodb.net:27017,cluster0-shard-00-02.pdunp.mongodb.net:27017/?ssl=true&replicaSet=atlas-me2tz8-shard-0&authSource=admin&retryWrites=true&w=majority")
+    client.db("ristoro").collection("ristoranti").updateOne({_id:new ObjectId(info.id)},{$pull:{prenotazione:{id:new ObjectId(info.idPrenotazione)}}},(err,result)=>{
         if (err) throw err;
     })
 })
