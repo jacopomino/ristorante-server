@@ -2,7 +2,6 @@ import cors from "cors"
 import express from "express"
 import bodyParser from "body-parser"
 import {MongoClient,ObjectId} from "mongodb"
-import { intersectRanges } from "@fullcalendar/core/internal";
 
 const PORT = process.env.PORT|| 3001;
 const app=express()
