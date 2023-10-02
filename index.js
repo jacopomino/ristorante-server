@@ -167,7 +167,7 @@ app.put("/stayLoggedIn", async (req,res)=>{
         if(!i){
             res.status(203).send("Token non valido")
         }else{
-            client.db("ristoro").collection("fattorino").find({idAttivta:new ObjectId(i._id)}).toArray().then(e=>{
+            client.db("ristoro").collection("fattorino").find({idAttivita:new ObjectId(i._id)}).toArray().then(e=>{
                 let obj={attivita:i,fattorino:e}
                 res.status(200).send(obj)
             })
